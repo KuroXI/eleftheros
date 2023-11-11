@@ -5,7 +5,7 @@ import { EventProps } from "../types/EventProps";
 import { CommandDeployment } from "../lib/deployment";
 import { GUILD_ID_NOT_SET_MSG } from "../lib/constant";
 
-export = {
+const Ready: EventProps = {
   name: "ready",
   once: true,
   handler: async (client: Client) => {
@@ -14,7 +14,7 @@ export = {
      *
      * Instead of requesting the configuration for each event in the database.
      * It cache the configuration to the Collection built in discord.js.
-     * 
+     *
      * const { data } = await supabase.from("guildConfig").select("*");
      */
 
@@ -34,4 +34,6 @@ export = {
 
     logger.info(`${client.user?.username} is ready!`);
   },
-} as EventProps;
+};
+
+export default Ready;

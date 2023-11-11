@@ -3,7 +3,6 @@ import logger from "./lib/logger";
 import { Client } from "discord.js";
 import { commandCache } from "./lib/cache";
 import { CommandProps } from "./types/CommandProps";
-import { EventProps } from "./types/EventProps";
 import { readdirSync } from "fs";
 import { MISSING_DISCORD_TOKEN_MSG } from "./lib/constant";
 
@@ -20,7 +19,7 @@ const client = new Client({
 readdirSync(`${__dirname}/events`)
   .filter((file) => file.endsWith(".ts"))
   .forEach((file) => {
-    const eventFile: EventProps = require(`${__dirname}/events/${file}`);
+    const { default: eventFile } = require(`${__dirname}/events/${file}`);
 
     try {
       eventFile.once

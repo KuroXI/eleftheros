@@ -4,7 +4,7 @@ import { commandCache } from "../lib/cache";
 import { COMMAND_CACHE_ERROR_MSG, ERROR_MSG } from "../lib/constant";
 import { EventProps } from "../types/EventProps";
 
-export = {
+const InteractionCreate: EventProps = {
   name: "interactionCreate",
   once: false,
   handler: async (client: Client, interaction: CommandInteraction) => {
@@ -36,4 +36,6 @@ export = {
       }
     }
   },
-} as EventProps;
+};
+
+export default InteractionCreate;
