@@ -1,0 +1,35 @@
+{
+  "name": "eleftheros",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node ./dist/index.js",
+    "dev": "nodemon ./src/index.ts",
+    "build": "tsc"
+  },
+  "keywords": [
+    "free",
+    "complete",
+    "multi-purpose",
+    "discord",
+    "bot"
+  ],
+  "author": "Victor Gonzales (KuroXI)",
+  "license": "LGPL-3.0-only",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.4",
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "log4js": "^6.9.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
