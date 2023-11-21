@@ -1,10 +1,9 @@
-import { AuditLogEvent, Client, EmbedBuilder, GuildChannel, TextChannel } from "discord.js";
+import { AuditLogEvent, Client, EmbedBuilder, GuildChannel } from "discord.js";
 import { EventProps } from "../types/EventProps";
 import { guildConfigCache } from "../lib/cache";
-import { CodeBlock } from "../utils/codeBlock";
-import { ExecutorNotFound, SetExecutor } from "../utils/util";
 import { ColorType } from "../constant/ColorType";
 import { ChannelType } from "../constant/ChannelType";
+import { CreateDelete } from "../components/channel/CreateDelete";
 
 const ChannelDelete: EventProps = {
 	name: "channelDelete",
@@ -30,26 +29,7 @@ const ChannelDelete: EventProps = {
 		});
 		const audit = channelDeleteAudit.entries.first();
 
-		const resultData: string[] = [];
-
-		resultData.push(`Channel Name: ${channel.name}`);
-		resultData.push(`Channel ID: ${channel.id}`);
-
-		if (type !== "Category" && channel.parent) {
-			resultData.push(`Parent Name: ${channel.parent.name}`);
-			resultData.push(`Parent ID: ${channel.parent.id}`);
-		}
-
-		if (audit?.executor) {
-			SetExecutor(audit.executor, embed, "Deleted");
-		} else {
-			ExecutorNotFound(embed, "deleted", ChannelType[channel.type]!);
-		}
-
-		embed.setDescription(CodeBlock(resultData.join("\n")));
-
-		const configChannel = client.channels.cache.get(config.guildChannelConfig.channelId) as TextChannel;
-		await configChannel.send({ embeds: [embed] });
+		return CreateDelete(client, channel, embed, audit, config, "DELETE");
 	},
 };
 
