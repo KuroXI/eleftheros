@@ -7,6 +7,7 @@ import { GUILD_ID_NOT_SET_MSG } from "../lib/constant";
 import { supabase } from "../lib/supabase";
 import { ConfigCacheProps } from "../types/ConfigCache";
 import { guildConfigCache } from "../lib/cache";
+import { GuildConfigQuery } from "../constant/SupabaseQuery";
 
 const Ready: EventProps = {
 	name: "ready",
@@ -18,23 +19,7 @@ const Ready: EventProps = {
 		 * Instead of requesting the configuration for each event in the database.
 		 * It caches the configuration to the Collection built in discord.js.
 		 */
-		const { data } = await supabase
-			.from("guildConfig")
-			.select(
-				`
-      id,
-      created_at,
-      guildChannelConfig(
-        id,
-        channelId,
-        isEnable,
-        isChannelCreateEnable,
-        isChannelDeleteEnable,
-        isChannelUpdateEnable
-      )
-    `,
-			)
-			.returns<ConfigCacheProps[]>();
+		const { data } = await supabase.from("guildConfig").select(GuildConfigQuery).returns<ConfigCacheProps[]>();
 
 		if (data) {
 			for (const config of data) {
