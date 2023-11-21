@@ -1,0 +1,18 @@
+export const ChannelType = [
+	"Text",
+	null,
+	"Voice",
+	null,
+	"Category",
+	"News",
+	null,
+	null,
+	null,
+	null,
+	"News Thread",
+	"Public Thread",
+	"Private Thread",
+	"Stage Voice",
+	"Directory",
+	"Forum",
+];

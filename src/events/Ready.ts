@@ -4,36 +4,60 @@ import { Client } from "discord.js";
 import { EventProps } from "../types/EventProps";
 import { CommandDeployment } from "../lib/deployment";
 import { GUILD_ID_NOT_SET_MSG } from "../lib/constant";
+import { supabase } from "../lib/supabase";
+import { ConfigCacheProps } from "../types/ConfigCache";
+import { guildConfigCache } from "../lib/cache";
 
 const Ready: EventProps = {
-  name: "ready",
-  once: true,
-  handler: async (client: Client) => {
-    /**
-     * TODO: Guild Config Cache
-     *
-     * Instead of requesting the configuration for each event in the database.
-     * It cache the configuration to the Collection built in discord.js.
-     *
-     * const { data } = await supabase.from("guildConfig").select("*");
-     */
+	name: "ready",
+	once: true,
+	handler: async (client: Client) => {
+		/**
+		 * Guild Config Cache
+		 *
+		 * Instead of requesting the configuration for each event in the database.
+		 * It caches the configuration to the Collection built in discord.js.
+		 */
+		const { data } = await supabase
+			.from("guildConfig")
+			.select(
+				`
+      id,
+      created_at,
+      guildChannelConfig(
+        id,
+        channelId,
+        isEnable,
+        isChannelCreateEnable,
+        isChannelDeleteEnable,
+        isChannelUpdateEnable
+      )
+    `,
+			)
+			.returns<ConfigCacheProps[]>();
 
-    /**
-     * Automatic Guild Interaction Reload
-     *
-     * It will automatically reload the guild slash command.
-     * It will skip if the ENVIRONMENT is not in development and GUILD_ID is not set.
-     */
-    if (process.env.ENVIRONMENT === "development") {
-      if (process.env.GUILD_ID?.length) {
-        await CommandDeployment(client);
-      } else {
-        logger.info(GUILD_ID_NOT_SET_MSG);
-      }
-    }
+		if (data) {
+			for (const config of data) {
+				guildConfigCache.set(config.id, config);
+			}
+		}
 
-    logger.info(`${client.user?.username} is ready!`);
-  },
+		/**
+		 * Automatic Guild Interaction Reload
+		 *
+		 * It will automatically reload the guild slash command.
+		 * It will skip if the ENVIRONMENT is not in development and GUILD_ID is not set.
+		 */
+		if (process.env.ENVIRONMENT === "development") {
+			if (process.env.GUILD_ID?.length) {
+				await CommandDeployment(client);
+			} else {
+				logger.info(GUILD_ID_NOT_SET_MSG);
+			}
+		}
+
+		logger.info(`${client.user?.username} is ready!`);
+	},
 };
 
 export default Ready;
