@@ -1,0 +1,16 @@
+export const Regions = new Map([
+	["brazil", "Brazil"],
+	["hongkong", "Hong Kong"],
+	["india", "India"],
+	["japan", "Japan"],
+	["rotterdam", "Rotterdam"],
+	["russia", "Russia"],
+	["singapore", "Singapore"],
+	["southafrica", "South Africa"],
+	["sydney", "Sydney"],
+	["us-central", "US Central"],
+	["us-east", "US East"],
+	["us-south", "US South"],
+	["us-west", "US West"],
+	[null, "Auto"],
+]);
