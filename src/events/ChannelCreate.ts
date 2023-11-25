@@ -13,9 +13,9 @@ const ChannelCreate: EventProps = {
 
 		if (
 			typeof config === "undefined" ||
-			!config?.guildChannelConfig.isEnable ||
-			!config.guildChannelConfig.isChannelCreateEnable ||
-			!client.channels.resolveId(config.guildChannelConfig.channelId)
+			!config?.channelConfig.isEnable ||
+			!config.channelConfig.isChannelCreateEnable ||
+			!client.channels.resolveId(config.channelConfig.channelId)
 		) {
 			return;
 		}

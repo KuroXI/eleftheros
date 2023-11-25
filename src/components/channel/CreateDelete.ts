@@ -32,11 +32,11 @@ export const CreateDelete = async (
 	if (audit?.executor) {
 		SetExecutor(audit.executor, embed, type === "CREATE" ? "Created" : "Deleted");
 	} else {
-		ExecutorNotFound(embed, type === "CREATE" ? "created" : "deleted", ChannelType[channel.type]!);
+		ExecutorNotFound(embed, type === "CREATE" ? "created" : "deleted", ChannelType[channel.type]! + " channel");
 	}
 
 	embed.setDescription(CodeBlock(resultData.join("\n")));
 
-	const configChannel = client.channels.cache.get(config.guildChannelConfig.channelId) as TextChannel;
+	const configChannel = client.channels.cache.get(config.channelConfig.channelId) as TextChannel;
 	await configChannel.send({ embeds: [embed] });
 };
