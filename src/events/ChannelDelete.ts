@@ -13,9 +13,9 @@ const ChannelDelete: EventProps = {
 
 		if (
 			typeof config === "undefined" ||
-			!config?.guildChannelConfig.isEnable ||
-			!config.guildChannelConfig.isChannelDeleteEnable ||
-			!client.channels.resolveId(config.guildChannelConfig.channelId)
+			!config?.channelConfig.isEnable ||
+			!config.channelConfig.isChannelDeleteEnable ||
+			!client.channels.resolveId(config.channelConfig.channelId)
 		) {
 			return;
 		}

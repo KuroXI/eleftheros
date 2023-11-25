@@ -17,9 +17,9 @@ const ChannelUpdate: EventProps = {
 
 		if (
 			typeof config === "undefined" ||
-			!config?.guildChannelConfig.isEnable ||
-			!config.guildChannelConfig.isChannelUpdateEnable ||
-			!client.channels.resolveId(config.guildChannelConfig.channelId)
+			!config?.channelConfig.isEnable ||
+			!config.channelConfig.isChannelUpdateEnable ||
+			!client.channels.resolveId(config.channelConfig.channelId)
 		) {
 			return;
 		}
@@ -44,9 +44,9 @@ const ChannelUpdate: EventProps = {
 		const resultNewSetting: string[] = [];
 
 		if (audit?.executor) {
-			SetExecutor(audit.executor, embed, "Created");
+			SetExecutor(audit.executor, embed, "Updated");
 		} else {
-			ExecutorNotFound(embed, "updated", type);
+			ExecutorNotFound(embed, "updated", type + " channel");
 		}
 
 		if (oldChannel.name !== newChannel.name) {
@@ -76,7 +76,7 @@ const ChannelUpdate: EventProps = {
 			{ name: "After", value: CodeBlock(resultNewSetting.join("\n")), inline: true },
 		]);
 
-		const configChannel = client.channels.cache.get(config.guildChannelConfig.channelId) as TextChannel;
+		const configChannel = client.channels.cache.get(config.channelConfig.channelId) as TextChannel;
 		await configChannel.send({ embeds: [embed] });
 	},
 };

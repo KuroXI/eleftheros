@@ -75,7 +75,13 @@ export const PermissionOldToNew = (oldPermission: string[], newPermission: strin
 	return permissions;
 };
 
-export const PermissionUpdate = async (client: Client, channel: GuildChannel, embed: EmbedBuilder, config: ConfigCacheProps, type: string) => {
+export const PermissionUpdate = async (
+	client: Client,
+	channel: GuildChannel,
+	embed: EmbedBuilder,
+	config: ConfigCacheProps,
+	type: string,
+) => {
 	embed.setTitle(`${type} Channel Permission Update`);
 
 	const overwriteUpdateAudit = await channel.guild.fetchAuditLogs({
@@ -91,12 +97,20 @@ export const PermissionUpdate = async (client: Client, channel: GuildChannel, em
 		ExecutorNotFound(embed, "update the permission of", type);
 	}
 
-	const allowOld: string[] = PermissionResolver((audit?.changes.find((change) => change.key === "allow")?.old as number) || 0);
+	const allowOld: string[] = PermissionResolver(
+		(audit?.changes.find((change) => change.key === "allow")?.old as number) || 0,
+	);
 
-	const allowNew: string[] = PermissionResolver((audit?.changes.find((change) => change.key === "allow")?.new as number) || 0);
+	const allowNew: string[] = PermissionResolver(
+		(audit?.changes.find((change) => change.key === "allow")?.new as number) || 0,
+	);
 
-	const denyOld: string[] = PermissionResolver((audit?.changes.find((change) => change.key === "deny")?.old as number) || 0);
-	const denyNew: string[] = PermissionResolver((audit?.changes.find((change) => change.key === "deny")?.new as number) || 0);
+	const denyOld: string[] = PermissionResolver(
+		(audit?.changes.find((change) => change.key === "deny")?.old as number) || 0,
+	);
+	const denyNew: string[] = PermissionResolver(
+		(audit?.changes.find((change) => change.key === "deny")?.new as number) || 0,
+	);
 
 	const permissions = [
 		...PermissionNewToOld(allowNew, denyOld, "ALLOW"),
@@ -113,6 +127,6 @@ export const PermissionUpdate = async (client: Client, channel: GuildChannel, em
 		{ name: "\u200b", value: permissions.join("\n"), inline: false },
 	]);
 
-	const configChannel = client.channels.cache.get(config.guildChannelConfig.channelId) as TextChannel;
+	const configChannel = client.channels.cache.get(config.channelConfig.channelId) as TextChannel;
 	return configChannel.send({ embeds: [embed] });
 };
