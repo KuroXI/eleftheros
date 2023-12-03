@@ -3,6 +3,7 @@ export type ConfigCacheProps = {
 	created_at: string;
 	channelConfig: ChannelConfig;
 	emojiConfig: EmojiConfig;
+	voiceConfig: VoiceConfig;
 };
 
 export type ChannelConfig = {
@@ -21,4 +22,13 @@ export type EmojiConfig = {
 	isEmojiCreateEnable: boolean;
 	isEmojiDeleteEnable: boolean;
 	isEmojiUpdateEnable: boolean;
+};
+
+export type VoiceConfig = {
+	id: string;
+	channelId: string;
+	isEnable: boolean;
+	isVoiceJoinEnable: boolean;
+	isVoiceLeftEnable: boolean;
+	isVoiceChangeEnable: boolean;
 };
