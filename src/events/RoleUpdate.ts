@@ -8,7 +8,7 @@ import { PermissionUpdate } from "../components/role/PermissionUpdate";
 
 const RoleUpdate: EventProps = {
 	name: "roleUpdate",
-	once: true,
+	once: false,
 	handler: async (client: Client, oldRole: Role, newRole: Role) => {
 		const config = guildConfigCache.get(oldRole.guild.id || newRole.guild.id);
 

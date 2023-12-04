@@ -6,7 +6,7 @@ import { CreateDelete } from "../components/role/CreateDelete";
 
 const RoleCreate: EventProps = {
 	name: "roleCreate",
-	once: true,
+	once: false,
 	handler: async (client: Client, role: Role) => {
 		const config = guildConfigCache.get(role.guild.id);
 
