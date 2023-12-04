@@ -6,7 +6,7 @@ import { CodeBlock } from "../utils/codeBlock";
 
 const VoiceStateUpdate: EventProps = {
 	name: "voiceStateUpdate",
-	once: true,
+	once: false,
 	handler: async (client: Client, oldVoice: VoiceState, newVoice: VoiceState) => {
 		const config = guildConfigCache.get(oldVoice.guild.id);
 
