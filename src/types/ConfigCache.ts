@@ -4,6 +4,7 @@ export type ConfigCacheProps = {
 	channelConfig: ChannelConfig;
 	emojiConfig: EmojiConfig;
 	voiceConfig: VoiceConfig;
+	roleConfig: RoleConfig
 };
 
 export type ChannelConfig = {
@@ -32,3 +33,12 @@ export type VoiceConfig = {
 	isVoiceLeftEnable: boolean;
 	isVoiceChangeEnable: boolean;
 };
+
+export type RoleConfig = {
+	id: string;
+	channelId: string;
+	isEnable: boolean;
+	isRoleCreateEnable: boolean;
+	isRoleDeleteEnable: boolean;
+	isRoleUpdateEnable: boolean;
+}
